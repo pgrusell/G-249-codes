@@ -8,7 +8,7 @@
 // If the configuration is "ideal" we will take the information given by a
 // single FOOT, otherwise, more complex calculations will be done.
 
-void sim2ana(TString fileNameIn, TString fileNameOut, TString conf = 'ideal')
+void sim2ana(TString fileNameIn, TString fileNameOut, TString conf = "ideal")
 {
 
     auto *f = new TFile(fileNameIn, "READ");
@@ -63,13 +63,13 @@ void sim2ana(TString fileNameIn, TString fileNameOut, TString conf = 'ideal')
             {
                 if (footID.back() % 2 == 0)
                 {
-                    pos.push_back(gRandom->Gaus(hit->GetYIn(), .2 * std::pow(10, -2)));
-                    pos.push_back(gRandom->Gaus(hit->GetXIn(), .2 * std::pow(10, -2)));
-                    pos.push_back(hit->GetZIn());
-
-                    // pos.push_back(hit->GetXIn());
-                    // pos.push_back(hit->GetYIn());
+                    // pos.push_back(gRandom->Gaus(hit->GetYIn(), .2 * std::pow(10, -2)));
+                    // pos.push_back(gRandom->Gaus(hit->GetXIn(), .2 * std::pow(10, -2)));
                     // pos.push_back(hit->GetZIn());
+
+                    pos.push_back(hit->GetXIn());
+                    pos.push_back(hit->GetYIn());
+                    pos.push_back(hit->GetZIn());
                 }
             }
         }
@@ -115,16 +115,17 @@ void sim2ana(TString fileNameIn, TString fileNameOut, TString conf = 'ideal')
         // Get the real vertex
         zFinal = -9999;
         pIDTrack = pID[7];
+        nTracks = brClone1->GetEntries();
 
         for (Int_t iTrack = 0; iTrack < nTracks; iTrack++)
         {
             auto *track = (R3BMCTrack *)brClone1->At(iTrack);
 
             if ((track->GetPdgCode() == pIDTrack) && (std::abs(track->GetStartZ()) < 20))
-            {
-                zFinal = track->GetStartZ();
-                // break;
-            }
+                if (track->GetPdgCode() == pIDTrack)
+                {
+                    zFinal = track->GetStartZ();
+                }
         }
 
         if (zFinal == -9999)
@@ -135,7 +136,7 @@ void sim2ana(TString fileNameIn, TString fileNameOut, TString conf = 'ideal')
         // Save the positions measured on the FOOTs
         for (Double_t posValue : pos)
         {
-            file << pos << " ";
+            file << posValue << " ";
         }
 
         // Save the z-vertex coordinate

@@ -143,12 +143,12 @@ void create_target_area_foot_only(const char *geoTag = "v2025_15cm", TString con
     auto trans3 = new TGeoCombiTrans("trans3", 0., 0., 5.95 + 26.4 + 33.8 / 2. + 0.75, fRefRot);
     trans3->RegisterYourself();
 
-    auto Part4 = new TGeoTube("Part4", 0., 10., 1.2 + 100);
+    auto Part4 = new TGeoTube("Part4", 0., 10., 1.2 + 35);
     auto trans4 = new TGeoCombiTrans("trans4", 0., 0., 6.775000 - 0.9 + 28.812028 + 33.688 + 1. + 0.75, fRefRot);
     trans4->RegisterYourself();
 
-    auto Part5 = new TGeoTube("Part5", 26., 29.25, 1.9 + 100);
-    auto trans5 = new TGeoCombiTrans("trans5", 0., 0., -42.1250 + 0.75, fRefRot);
+    auto Part5 = new TGeoTube("Part5", 0., 29.25, 110);
+    auto trans5 = new TGeoCombiTrans("trans5", 0., 0., -100, fRefRot);
     trans5->RegisterYourself();
 
     auto pVCWorld = new TGeoCompositeShape("VCbox", "Part1:trans1 + Part2:trans2 + Part3:trans3 + Part4:trans4+ Part5:trans5");
@@ -593,13 +593,28 @@ void create_target_area_foot_only(const char *geoTag = "v2025_15cm", TString con
 
     */
 
-    z2 = -85.;
+    z1 = -200;
+    z2 = -198;
+    z3 = -102;
+    z4 = -98;
 
-    z4 = -61.;
+    if (conf == "in")
+    {
+        z5 = 27.;
+        z6 = 29.;
 
-    z6 = 35.;
+        z7 = 72.;
+        z8 = 74.;
+    }
 
-    z8 = 60.;
+    if (conf == "out")
+    {
+        z5 = 76.;
+        z6 = 80.;
+
+        z7 = 100.;
+        z8 = 104.;
+    }
 
     // Nº 2
     dx = 0.;
@@ -666,14 +681,14 @@ void create_target_area_foot_only(const char *geoTag = "v2025_15cm", TString con
     TGeoCombiTrans *pMatrix230 = new TGeoCombiTrans("", dx, dy, dz, pMatrix231);
 
     // Si sensors
-    // pWorld->AddNode(TraLog, 1, pMatrix204);
-    pWorld->AddNode(TraLog, 1, pMatrix202);
-    // pWorld->AddNode(TraLog, 3, pMatrix216);
-    pWorld->AddNode(TraLog, 2, pMatrix218);
-    // pWorld->AddNode(TraLog, 5, pMatrix214); // Tracker
-    pWorld->AddNode(TraLog, 3, pMatrix226);
-    // pWorld->AddNode(TraLog, 7, pMatrix228);
-    pWorld->AddNode(TraLog, 4, pMatrix230);
+    pWorld->AddNode(TraLog, 1, pMatrix204);
+    pWorld->AddNode(TraLog, 2, pMatrix202);
+    pWorld->AddNode(TraLog, 3, pMatrix216);
+    pWorld->AddNode(TraLog, 4, pMatrix218);
+    pWorld->AddNode(TraLog, 5, pMatrix214); // Tracker
+    pWorld->AddNode(TraLog, 6, pMatrix226);
+    pWorld->AddNode(TraLog, 7, pMatrix228);
+    pWorld->AddNode(TraLog, 8, pMatrix230);
 
     // ---------------   Finish   -----------------------------------------------
     gGeoMan->CloseGeometry();

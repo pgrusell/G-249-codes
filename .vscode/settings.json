@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "sim_foot_only.C": "cpp",
+        "create_target_area_foot_only.C": "cpp",
+        "create_target_area_2025_15cm_geo.C": "cpp",
+        "sim2ana.C": "cpp",
+        "anareco.C": "cpp",
+        "error.C": "cpp"
+    }
+}
