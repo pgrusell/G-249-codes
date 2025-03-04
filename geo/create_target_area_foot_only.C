@@ -147,8 +147,8 @@ void create_target_area_foot_only(const char *geoTag = "v2025_15cm", TString con
     auto trans4 = new TGeoCombiTrans("trans4", 0., 0., 6.775000 - 0.9 + 28.812028 + 33.688 + 1. + 0.75, fRefRot);
     trans4->RegisterYourself();
 
-    auto Part5 = new TGeoTube("Part5", 0., 29.25, 110);
-    auto trans5 = new TGeoCombiTrans("trans5", 0., 0., -100, fRefRot);
+    auto Part5 = new TGeoTube("Part5", 0., 29.25, 150);
+    auto trans5 = new TGeoCombiTrans("trans5", 0., 0., -150, fRefRot);
     trans5->RegisterYourself();
 
     auto pVCWorld = new TGeoCompositeShape("VCbox", "Part1:trans1 + Part2:trans2 + Part3:trans3 + Part4:trans4+ Part5:trans5");
@@ -541,80 +541,26 @@ void create_target_area_foot_only(const char *geoTag = "v2025_15cm", TString con
 
     Double_t z1, z2, z3, z4, z5, z6, z7, z8;
 
-    /*
+    std::ifstream filesetup("../setup/setup1.dat");
+    std::string line;
+    std::vector<Double_t> zetas;
 
-    z1 = -89.;
-    z2 = -85.;
-    z3 = -65.;
-    z4 = -61.;
-
-    if (conf == "in")
+    while (std::getline(filesetup, line))
     {
-      z5 = 26.;
-      z6 = 30.;
-
-      z7 = 76.;
-      z8 = 80.;
+        std::istringstream iss(line);
+        Double_t value;
+        iss >> value;
+        zetas.push_back(value);
     }
 
-    if (conf == "out")
-    {
-      z5 = 76.;
-      z6 = 80.;
-
-      z7 = 100.;
-      z8 = 104.;
-    }
-
-
-
-    z1 = -87.;
-    z2 = -85.;
-    z3 = -63.;
-    z4 = -61.;
-
-    if (conf == "in")
-    {
-      z5 = 26.;
-      z6 = 28.;
-
-      z7 = 76.;
-      z8 = 78.;
-    }
-
-    if (conf == "out")
-    {
-      z5 = 76.;
-      z6 = 80.;
-
-      z7 = 100.;
-      z8 = 104.;
-    }
-
-    */
-
-    z1 = -200;
-    z2 = -198;
-    z3 = -102;
-    z4 = -98;
-
-    if (conf == "in")
-    {
-        z5 = 27.;
-        z6 = 29.;
-
-        z7 = 72.;
-        z8 = 74.;
-    }
-
-    if (conf == "out")
-    {
-        z5 = 76.;
-        z6 = 80.;
-
-        z7 = 100.;
-        z8 = 104.;
-    }
+    z1 = zetas[0];
+    z2 = zetas[1];
+    z3 = zetas[2];
+    z4 = zetas[3];
+    z5 = zetas[4];
+    z6 = zetas[5];
+    z7 = zetas[6];
+    z8 = zetas[7];
 
     // Nº 2
     dx = 0.;
