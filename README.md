@@ -20,3 +20,4 @@ To run these codes, the R3BRoot framework ([R3BRoot GitHub](https://github.com/R
 
 ```bash
 conda env create -f dependencies/python_dependencies.yml
+```

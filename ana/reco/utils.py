@@ -4,6 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from tensorflow import keras
 from tensorflow.keras import layers
+from tensorflow.keras import regularizers
 
 
 class VertexReconstruction:
@@ -22,7 +23,7 @@ class VertexReconstruction:
         return pd.read_csv(self.file_in, delimiter=' ', header=None)
 
     def prepare_data(self):
-        '''This function Transforms the data to take the four 3D points 
+        '''This function Transforms the data to take the four 3D points
         as input and the simulated z-vertex as output.'''
         X = self.data.iloc[:, :12].values
         y = self.data.iloc[:, 12].values
@@ -55,12 +56,23 @@ class VertexReconstruction:
 
         # Create a new model
         self.model = keras.Sequential([
-            layers.Dense(256, activation='relu', input_shape=(12,)),
-            layers.Dense(512, activation='relu'),
-            layers.Dense(256, activation='relu'),
-            layers.Dense(128, activation='relu'),
-            layers.Dense(64, activation='relu'),
-            layers.Dense(32, activation='relu'),
+            layers.Dense(512, activation='relu', input_shape=(12,),
+                         kernel_regularizer=regularizers.l2(0.001)),
+            layers.Dropout(0.2),
+            layers.Dense(1024, activation='relu',
+                         kernel_regularizer=regularizers.l2(0.001)),
+            layers.Dropout(0.2),
+            layers.Dense(512, activation='relu',
+                         kernel_regularizer=regularizers.l2(0.001)),
+            layers.Dropout(0.2),
+            layers.Dense(256, activation='relu',
+                         kernel_regularizer=regularizers.l2(0.001)),
+            layers.Dropout(0.2),
+            layers.Dense(128, activation='relu',
+                         kernel_regularizer=regularizers.l2(0.001)),
+            layers.Dropout(0.2),
+            layers.Dense(64, activation='relu',
+                         kernel_regularizer=regularizers.l2(0.001)),
             layers.Dense(1)
         ])
         self.model.compile(optimizer='adam', loss='mse')
