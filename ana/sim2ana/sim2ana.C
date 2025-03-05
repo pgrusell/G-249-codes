@@ -63,13 +63,13 @@ void sim2ana(TString fileNameIn, TString fileNameOut, TString conf = "ideal")
             {
                 if (footID.back() % 2 == 0)
                 {
-                    // pos.push_back(gRandom->Gaus(hit->GetYIn(), .2 * std::pow(10, -2)));
-                    // pos.push_back(gRandom->Gaus(hit->GetXIn(), .2 * std::pow(10, -2)));
-                    // pos.push_back(hit->GetZIn());
-
-                    pos.push_back(hit->GetXIn());
-                    pos.push_back(hit->GetYIn());
+                    pos.push_back(gRandom->Gaus(hit->GetYIn(), .2 * std::pow(10, -2)));
+                    pos.push_back(gRandom->Gaus(hit->GetXIn(), .2 * std::pow(10, -2)));
                     pos.push_back(hit->GetZIn());
+
+                    // pos.push_back(hit->GetXIn());
+                    // pos.push_back(hit->GetYIn());
+                    // pos.push_back(hit->GetZIn());
                 }
             }
         }

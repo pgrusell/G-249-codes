@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Comprueba si el directorio results no existe y lo crea
 if [ ! -d "../results" ]; then
     mkdir -p "../results"
 fi

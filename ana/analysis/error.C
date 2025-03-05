@@ -1,7 +1,7 @@
 // This macro will calculate the difference between the reconstructed vertex
 // and the real vertex to obtain the resolving power.
 
-void error(TString fileName)
+void error(TString fileName, TString fileOut)
 {
 
     std::ifstream file(fileName);
@@ -18,4 +18,7 @@ void error(TString fileName)
     }
 
     h->Draw();
+
+    auto *f = new TFile(fileOut, "RECREATE");
+    h->Write();
 }

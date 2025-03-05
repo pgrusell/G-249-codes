@@ -1,7 +1,7 @@
 // Simulation of the G-249 experiment ONLY with the vacuum chamber created by the geometry
 // macros as well as the FOOTs.
 
-void sim_foot_only(Int_t nEvents = 1000000)
+void sim_foot_only(Int_t nEvents = 2000000)
 {
 
     TString transport = "TGeant4";
