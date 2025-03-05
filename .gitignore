@@ -2,3 +2,4 @@
 *.root
 *.txt
 *.vscode
+__pycache__
