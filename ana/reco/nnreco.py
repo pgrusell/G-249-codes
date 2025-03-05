@@ -34,7 +34,8 @@ model_path = sys.argv[3] if len(sys.argv) == 4 else None
 
 # If a trained NN is provided, use it to reconstruct the vertex
 if model_path:
-    model = keras.models.load_model(model_path)
+    model = keras.models.load_model(model_path, compile=False)
+    model.compile(optimizer='adam', loss='mse')
 
     # Normalizing the input data with StandardScaler
     scaler = StandardScaler()
