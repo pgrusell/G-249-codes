@@ -63,8 +63,8 @@ void sim2ana(TString fileNameIn, TString fileNameOut, TString conf = "ideal")
             {
                 if (footID.back() % 2 == 0)
                 {
-                    pos.push_back(gRandom->Gaus(hit->GetYIn(), .2 * std::pow(10, -2)));
-                    pos.push_back(gRandom->Gaus(hit->GetXIn(), .2 * std::pow(10, -2)));
+                    pos.push_back(gRandom->Gaus(hit->GetYIn(), .20 * std::pow(10, -2)));
+                    pos.push_back(gRandom->Gaus(hit->GetXIn(), .20 * std::pow(10, -2)));
                     pos.push_back(hit->GetZIn());
 
                     // pos.push_back(hit->GetXIn());
@@ -113,25 +113,25 @@ void sim2ana(TString fileNameIn, TString fileNameOut, TString conf = "ideal")
         }
 
         // Get the real vertex
-        zFinal = -9999;
+        // zFinal = -9999;
         pIDTrack = pID[7];
         nTracks = brClone1->GetEntries();
 
         for (Int_t iTrack = 0; iTrack < nTracks; iTrack++)
         {
             auto *track = (R3BMCTrack *)brClone1->At(iTrack);
-
-            if ((track->GetPdgCode() == pIDTrack) && (std::abs(track->GetStartZ()) < 20))
-                if (track->GetPdgCode() == pIDTrack)
-                {
-                    zFinal = track->GetStartZ();
-                }
+            if (track->GetPdgCode() == pIDTrack)
+            {
+                zFinal = track->GetStartZ();
+            }
         }
 
+        /*
         if (zFinal == -9999)
         {
             continue;
         }
+        */
 
         // Save the positions measured on the FOOTs
         for (Double_t posValue : pos)
