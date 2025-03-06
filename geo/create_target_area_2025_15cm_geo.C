@@ -459,10 +459,10 @@ void create_target_area_2025_15cm_geo(const char *geoTag = "v2025_15cm", TString
         new TGeoCombiTrans("", dx, dy, dz + general_zoffset, rot0);
     pWorld->AddNode(pMylar3Log, 0, pMatrix12);
 
-    // Exit mylar window for the vacuum chamber
-    Double_t parWin[3] = {0., 7., 0.0100 / 2.0}; // 100 micras
+    // Exit steel window for the vacuum chamber
+    Double_t parWin[3] = {0., 7, 0.0100 / 2.0}; // 100 micras
     TGeoTube *pWin1 = new TGeoTube(parWin);
-    TGeoVolume *pWin1Log = new TGeoVolume("ExitWinLog", pWin1, pMed4);
+    TGeoVolume *pWin1Log = new TGeoVolume("ExitWinLog", pWin1, pMed3); // steel
     pWin1Log->SetVisLeaves(kTRUE);
     // pWin1Log->SetLineColor(2);
 
@@ -471,6 +471,19 @@ void create_target_area_2025_15cm_geo(const char *geoTag = "v2025_15cm", TString
     dz = 6.775000 - 0.9 + 28.812028 + 33.688 + 1. + offsetZ + general_zoffset;
     TGeoCombiTrans *pMatrix13 = new TGeoCombiTrans("", dx, dy, dz, rot0);
     pWorld->AddNode(pWin1Log, 0, pMatrix13);
+
+    // Entrance steel window for the vacuum chamber
+    Double_t parWinE[3] = {0., 7.6, 0.0100 / 2.0}; // 100 micras
+    TGeoTube *pWin1E = new TGeoTube(parWinE);
+    TGeoVolume *pWin1LogE = new TGeoVolume("ExitWinLogE", pWin1E, pMed3); // steel
+    pWin1LogE->SetVisLeaves(kTRUE);
+    // pWin1Log->SetLineColor(2);
+
+    dx = 0.000000;
+    dy = 0.000000;
+    dz = -55.000000;
+    TGeoCombiTrans *pMatrix13E = new TGeoCombiTrans("", dx, dy, dz, rot0);
+    pWorld->AddNode(pWin1LogE, 0, pMatrix13E);
 
     /// LOS //////////////////////////////////////////////////////////
 
