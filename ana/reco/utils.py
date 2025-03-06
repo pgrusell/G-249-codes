@@ -1,10 +1,11 @@
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
 from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras import regularizers
+from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 
 
 class VertexReconstruction:
@@ -13,7 +14,7 @@ class VertexReconstruction:
         self.file_in = file_in
         self.data = self.load_data()
         self.X, self.y = self.prepare_data()
-        self.scaler = StandardScaler()
+        self.scaler = MinMaxScaler(feature_range=(-1, 1))
         self.model = None
 
     def load_data(self) -> pd.DataFrame:
@@ -33,7 +34,7 @@ class VertexReconstruction:
         '''This function loads a model given its path (it has to point
         to a .h5 file).'''
         self.model = keras.models.load_model(model_path, compile=False)
-        self.model.compile(optimizer='adam', loss='mse')
+        self.model.compile(optimizer='adam', loss='huber')
 
         # The model has been trained with scaled data so we have to do the same
         self.X = self.scaler.fit_transform(self.X)
@@ -56,30 +57,32 @@ class VertexReconstruction:
 
         # Create a new model
         self.model = keras.Sequential([
-            layers.Dense(512, activation='relu', input_shape=(12,),
+            layers.Dense(256, activation='relu', input_shape=(12,),
                          kernel_regularizer=regularizers.l2(0.001)),
-            layers.Dropout(0.2),
-            layers.Dense(1024, activation='relu',
-                         kernel_regularizer=regularizers.l2(0.001)),
-            layers.Dropout(0.2),
-            layers.Dense(512, activation='relu',
-                         kernel_regularizer=regularizers.l2(0.001)),
-            layers.Dropout(0.2),
-            layers.Dense(256, activation='relu',
-                         kernel_regularizer=regularizers.l2(0.001)),
-            layers.Dropout(0.2),
+            layers.Dropout(0.1),
             layers.Dense(128, activation='relu',
                          kernel_regularizer=regularizers.l2(0.001)),
-            layers.Dropout(0.2),
+            layers.Dropout(0.1),
             layers.Dense(64, activation='relu',
+                         kernel_regularizer=regularizers.l2(0.001)),
+            layers.Dropout(0.1),
+            layers.Dense(32, activation='relu',
                          kernel_regularizer=regularizers.l2(0.001)),
             layers.Dense(1)
         ])
-        self.model.compile(optimizer='adam', loss='mse')
+        self.model.compile(optimizer=keras.optimizers.Adam(
+            learning_rate=1e-4), loss='huber')
+
+        # Callbacks
+        early_stopping = EarlyStopping(
+            monitor='val_loss', patience=20, restore_best_weights=True)
+        reduce_lr = ReduceLROnPlateau(
+            monitor='val_loss', factor=0.5, patience=10, min_lr=1e-6)
 
         # Training
-        self.model.fit(X_train, y_train, epochs=100,
-                       batch_size=32, validation_split=0.1)
+        self.model.fit(X_train, y_train, epochs=200,
+                       batch_size=64, validation_split=0.1,
+                       callbacks=[early_stopping, reduce_lr])
 
         # Save the model in the current directory
         self.model.save("model.h5")
