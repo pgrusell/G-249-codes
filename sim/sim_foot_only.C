@@ -55,7 +55,7 @@ void sim_foot_only(Int_t nEvents = 2000000)
     // -----   Create PrimaryGenerator   --------------------------------------
     FairPrimaryGenerator *primGen = new FairPrimaryGenerator();
 
-    Double_t pz = 31.34 / 25.;
+    Double_t pz = 31.96 / 25.; // 650 Mev/u
     auto ionGen = new FairIonGenerator(9, 25, 9, 1, 0., 0., pz, 0., 0., -300.);
     primGen->AddGenerator(ionGen);
 
