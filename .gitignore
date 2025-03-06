@@ -2,5 +2,6 @@
 *.root
 *.txt
 *.vscode
+*.pdf
 __pycache__
 results

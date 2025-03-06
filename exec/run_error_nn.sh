@@ -20,7 +20,7 @@ root -b -q -l "anareco.C(\"$RESULTSPATH/mapped.txt\", \"$RESULTSPATH/reconstruct
 python nnreco.py "$RESULTSPATH/mapped.txt" "$RESULTSPATH/reconstructed_nn.txt" "model.h5"
 
 cd ../analysis
-root -b -q -l "error.C(\"$RESULTSPATH/reconstructed_nn.txt\", \"$RESULTSPATH/reconstructed_ana.root\")"
-root -b -q -l "error.C(\"$RESULTSPATH/reconstructed_ana.txt\", \"$RESULTSPATH/reconstructed_nn.root\")"
+root -b -q -l "error.C(\"$RESULTSPATH/reconstructed_nn.txt\", \"$RESULTSPATH/reconstructed_nn.root\")"
+root -b -q -l "error.C(\"$RESULTSPATH/reconstructed_ana.txt\", \"$RESULTSPATH/reconstructed_ana.root\")"
 
 cd ../../exec
