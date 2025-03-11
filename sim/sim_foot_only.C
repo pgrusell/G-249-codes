@@ -1,14 +1,14 @@
 // Simulation of the G-249 experiment ONLY with the vacuum chamber created by the geometry
 // macros as well as the FOOTs.
 
-void sim_foot_only(Int_t nEvents = 2000000)
+void sim_foot_only(Int_t nEvents = 100000000)
 {
 
     TString transport = "TGeant4";
     TString outFile = "./sim.root";
     TString parFile = "./par.root";
 
-    Int_t randomSeed = 335566; // 0 for time-dependent random numbers
+    Int_t randomSeed = 0; // 0 for time-dependent random numbers
 
     // ------------------------------------------------------------------------
     TString dir = gSystem->Getenv("VMCWORKDIR");
@@ -60,7 +60,7 @@ void sim_foot_only(Int_t nEvents = 2000000)
     primGen->AddGenerator(ionGen);
 
     run->SetGenerator(primGen);
-    run->SetStoreTraj(true);
+    run->SetStoreTraj(false);
 
     FairLogger::GetLogger()->SetLogVerbosityLevel("LOW");
     FairLogger::GetLogger()->SetLogScreenLevel("INFO"); // nolog for no output, INFO to show the n. of hits
