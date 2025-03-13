@@ -17,7 +17,7 @@ root -b -q -l "sim2ana.C(\"../../sim/sim.root\", \"$RESULTSPATH/mapped.txt\")"
 
 cd ../reco
 root -b -q -l "anareco.C(\"$RESULTSPATH/mapped.txt\", \"$RESULTSPATH/reconstructed_ana.txt\")"
-python nnreco.py "$RESULTSPATH/mapped.txt" "$RESULTSPATH/reconstructed_nn.txt" "model.h5"
+python nnreco.py "$RESULTSPATH/mapped.txt" "$RESULTSPATH/reconstructed_nn.txt" "model.keras"
 
 cd ../analysis
 root -b -q -l "error.C(\"$RESULTSPATH/reconstructed_nn.txt\", \"$RESULTSPATH/reconstructed_nn.root\")"
