@@ -57,17 +57,20 @@ class VertexReconstruction:
 
         # Create a new model
         self.model = keras.Sequential([
-            layers.Dense(256, activation='relu', input_shape=(12,),
-                         kernel_regularizer=regularizers.l2(0.001)),
-            layers.Dropout(0.1),
+            layers.Dense(512, activation='relu', input_shape=(
+                12,), kernel_regularizer=regularizers.l2(0.00005)),
+            layers.Dropout(0.2),
+            layers.Dense(256, activation='relu',
+                         kernel_regularizer=regularizers.l2(0.00005)),
+            layers.Dropout(0.2),
             layers.Dense(128, activation='relu',
-                         kernel_regularizer=regularizers.l2(0.001)),
+                         kernel_regularizer=regularizers.l2(0.00005)),
             layers.Dropout(0.1),
             layers.Dense(64, activation='relu',
-                         kernel_regularizer=regularizers.l2(0.001)),
+                         kernel_regularizer=regularizers.l2(0.00005)),
             layers.Dropout(0.1),
             layers.Dense(32, activation='relu',
-                         kernel_regularizer=regularizers.l2(0.001)),
+                         kernel_regularizer=regularizers.l2(0.00005)),
             layers.Dense(1)
         ])
         self.model.compile(optimizer=keras.optimizers.Adam(
@@ -85,7 +88,7 @@ class VertexReconstruction:
                        callbacks=[early_stopping, reduce_lr])
 
         # Save the model in the current directory
-        self.model.save("model.h5")
+        self.model.save("model.keras")
 
         # Predict only for the test set
         self.y_predicted = self.model.predict(X_test).flatten()
