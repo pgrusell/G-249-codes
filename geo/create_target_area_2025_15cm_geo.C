@@ -460,7 +460,7 @@ void create_target_area_2025_15cm_geo(const char *geoTag = "v2025_15cm", TString
     pWorld->AddNode(pMylar3Log, 0, pMatrix12);
 
     // Exit steel window for the vacuum chamber
-    Double_t parWin[3] = {0., 7, 0.0100 / 2.0}; // 100 micras
+    Double_t parWin[3] = {0., 7, 0.0050 / 2.0}; // 50 micras
     TGeoTube *pWin1 = new TGeoTube(parWin);
     TGeoVolume *pWin1Log = new TGeoVolume("ExitWinLog", pWin1, pMed3); // steel
     pWin1Log->SetVisLeaves(kTRUE);
@@ -473,7 +473,7 @@ void create_target_area_2025_15cm_geo(const char *geoTag = "v2025_15cm", TString
     pWorld->AddNode(pWin1Log, 0, pMatrix13);
 
     // Entrance steel window for the vacuum chamber
-    Double_t parWinE[3] = {0., 7.6, 0.0100 / 2.0}; // 100 micras
+    Double_t parWinE[3] = {0., 7.6, 0.0050 / 2.0}; // 100 micras
     TGeoTube *pWin1E = new TGeoTube(parWinE);
     TGeoVolume *pWin1LogE = new TGeoVolume("ExitWinLogE", pWin1E, pMed3); // steel
     pWin1LogE->SetVisLeaves(kTRUE);
